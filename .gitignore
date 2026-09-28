@@ -15,3 +15,5 @@ next-env.d.ts
 
 # export statique zippé pour Infomaniak
 /williamrosset-site.zip
+/dist/
+/williamrosset-portfolio.zip

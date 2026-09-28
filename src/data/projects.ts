@@ -12,6 +12,8 @@
  *  se charge de servir de l'AVIF/WebP à la bonne taille.
  */
 
+import { asset } from "@/lib/asset";
+
 export type ProjectImage = {
   src: string;
   alt: string;
@@ -43,7 +45,7 @@ export type Project = {
 
 /* Petit utilitaire pour écrire les chemins d'images sans répétition */
 const img = (slug: string, file: string, alt: string, width = 1600, height = 2000): ProjectImage => ({
-  src: `/projects/${slug}/${file}`,
+  src: asset(`/projects/${slug}/${file}`),
   alt,
   width,
   height,

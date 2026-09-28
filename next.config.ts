@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   output: "export",
   // /projets/pulse → /projets/pulse/index.html, servi nativement par Apache
   trailingSlash: true,
+  // Thème WordPress : JS/CSS/polices servis depuis le dossier du thème
+  assetPrefix: process.env.NEXT_PUBLIC_ASSET_PREFIX || undefined,
   images: {
     // L'optimiseur d'images de Next.js a besoin d'un serveur : en export
     // statique, les images sont servies telles quelles (pensez à les

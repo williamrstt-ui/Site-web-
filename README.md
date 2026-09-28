@@ -16,7 +16,20 @@ npm run typecheck  # vérification TypeScript
 
 Node.js 20.9 ou plus récent est requis.
 
-## Mise en ligne sur williamrosset.fr (Infomaniak)
+## Mise en ligne sur williamrosset.fr — thème WordPress (recommandé)
+
+```bash
+npm run build:wordpress   # → williamrosset-portfolio.zip
+```
+
+1. Admin WordPress → **Apparence → Thèmes → Ajouter → Téléverser un thème** → choisir `williamrosset-portfolio.zip` → Installer.
+2. Cliquez sur **Activer**. Le portfolio remplace le site public ; `/wp-admin` reste accessible.
+3. Pour revenir en arrière : réactivez simplement votre ancien thème.
+4. Mise à jour : relancez `npm run build:wordpress`, puis re-téléversez le zip et choisissez « Remplacer l'actuel par la version téléversée ».
+
+Le thème (`wordpress-theme/functions.php`) sert l'export Next.js rangé dans `site/` ; JS, CSS, polices et images sont servis directement par le serveur depuis le dossier du thème.
+
+## Alternative : export statique sans WordPress (Infomaniak)
 
 Le site est exporté en fichiers statiques (`output: "export"`) : pas besoin de Node.js ni de WordPress sur le serveur.
 
