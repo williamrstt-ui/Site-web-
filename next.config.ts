@@ -2,13 +2,17 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Export 100 % statique (dossier /out) : se dépose tel quel sur un
+  // hébergement mutualisé (Infomaniak, OVH…), sans serveur Node.js.
+  output: "export",
+  // /projets/pulse → /projets/pulse/index.html, servi nativement par Apache
+  trailingSlash: true,
   images: {
-    // next/image sert automatiquement de l'AVIF, sinon du WebP.
-    formats: ["image/avif", "image/webp"],
-    deviceSizes: [640, 828, 1080, 1440, 1920, 2560],
+    // L'optimiseur d'images de Next.js a besoin d'un serveur : en export
+    // statique, les images sont servies telles quelles (pensez à les
+    // exporter en WebP/JPG ~2000 px, 80 % de qualité).
+    unoptimized: true,
   },
-  // Three.js est livré en ESM : on le laisse transpiler proprement.
-  transpilePackages: ["three"],
 };
 
 export default nextConfig;

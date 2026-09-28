@@ -16,6 +16,19 @@ npm run typecheck  # vérification TypeScript
 
 Node.js 20.9 ou plus récent est requis.
 
+## Mise en ligne sur williamrosset.fr (Infomaniak)
+
+Le site est exporté en fichiers statiques (`output: "export"`) : pas besoin de Node.js ni de WordPress sur le serveur.
+
+1. `npm run build` → génère le dossier `out/` (il contient aussi le `.htaccess`).
+2. **Sauvegardez d'abord votre WordPress** : Manager Infomaniak → Hébergement Web → Sauvegardes (ou téléchargez le dossier du site + un export de la base de données).
+3. Dans le Manager : Hébergement Web → votre site → **Gestionnaire de fichiers** (ou FTP avec FileZilla).
+4. Ouvrez le dossier racine du site williamrosset.fr (souvent `/sites/williamrosset.fr`), déplacez les fichiers WordPress dans un sous-dossier `ancien-wordpress/` (ne les supprimez pas tout de suite).
+5. Téléversez **le contenu** de `out/` (pas le dossier lui-même) à la racine, `.htaccess` compris (fichier caché).
+6. Ouvrez https://williamrosset.fr en navigation privée pour contourner le cache.
+
+Pour chaque mise à jour : `npm run build` puis re-téléverser le contenu de `out/`.
+
 ## Ajouter une création
 
 Tout se passe dans **`src/data/projects.ts`** :

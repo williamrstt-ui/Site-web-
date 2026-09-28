@@ -12,3 +12,6 @@ next-env.d.ts
 *.log
 .env*.local
 .vercel
+
+# export statique zippé pour Infomaniak
+/williamrosset-site.zip

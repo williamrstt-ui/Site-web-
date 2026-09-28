@@ -28,8 +28,7 @@ const grotesk = Inter_Tight({
 const fullName = `${site.firstName} ${site.lastName}`;
 
 export const metadata: Metadata = {
-  // Renseignez NEXT_PUBLIC_SITE_URL en production (ex. https://williamrosset.com)
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://williamrosset.fr"),
   title: { default: `${fullName} — Portfolio`, template: `%s — ${fullName}` },
   description: `${fullName}, ${site.role.toLowerCase()}. ${site.baseline}.`,
   openGraph: {
