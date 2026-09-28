@@ -53,9 +53,11 @@ export function LiquidBlob({
     [],
   );
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     const m = mesh.current;
     if (!m) return;
+    // Écran portrait : on réduit le blob pour qu'il tienne dans la largeur
+    const fit = THREE.MathUtils.clamp(state.viewport.aspect * 1.1, 0.6, 1);
     const dt = Math.min(delta, 1 / 30);
     const progress = getProgress?.() ?? 0;
 
@@ -70,7 +72,7 @@ export function LiquidBlob({
     uniforms.uTwist.value = THREE.MathUtils.lerp(uniforms.uTwist.value, progress * 1.6, 0.08);
     uniforms.uStrength.value = THREE.MathUtils.lerp(uniforms.uStrength.value, 0.28 + progress * 0.35, 0.08);
 
-    const targetScale = 1 + progress * 0.6;
+    const targetScale = (1 + progress * 0.6) * fit;
     m.scale.setScalar(THREE.MathUtils.lerp(m.scale.x, targetScale, 0.08));
 
     // Rotation continue + inclinaison vers la souris
