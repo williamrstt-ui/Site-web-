@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   Design tokens — blanc lumineux + accents saturés
+   ───────────────────────────────────────────────────────────── */
+@theme {
+  --color-paper: #f6f5f1;
+  --color-ink: #0d0d0f;
+  --color-muted: #5f5f66; /* 5.9:1 sur paper → AA */
+  --color-line: #0d0d0f1f;
+
+  --color-electric: #2b50ff;
+  --color-pink: #ff4fd8;
+  --color-orange: #ff6a1f;
+  --color-lime: #c6f432;
+  --color-violet: #7b2bff;
+
+  --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif-display), ui-serif, Georgia, serif;
+
+  --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-quart: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base
+   ───────────────────────────────────────────────────────────── */
+html {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-paper);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-electric);
+  color: white;
+}
+
+/* Le curseur custom remplace le curseur natif uniquement sur souris */
+@media (hover: hover) and (pointer: fine) {
+  html.has-custom-cursor,
+  html.has-custom-cursor * {
+    cursor: none !important;
+  }
+}
+
+/* Focus clavier très visible, jamais masqué */
+:focus-visible {
+  outline: 2px solid var(--color-electric);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Lenis (smooth scroll)
+   ───────────────────────────────────────────────────────────── */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Grain de film — SVG feTurbulence animé par pas
+   ───────────────────────────────────────────────────────────── */
+.grain {
+  position: fixed;
+  inset: -100%;
+  width: 300%;
+  height: 300%;
+  pointer-events: none;
+  z-index: 90;
+  opacity: 0.07;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain 0.9s steps(6) infinite;
+}
+
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  20% { transform: translate(-3%, 2%); }
+  40% { transform: translate(2%, -4%); }
+  60% { transform: translate(-4%, -1%); }
+  80% { transform: translate(3%, 3%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Utilitaires maison
+   ───────────────────────────────────────────────────────────── */
+
+/* Dégradé irisé réutilisé sur les mots mis en avant */
+.text-iris {
+  background: linear-gradient(100deg, var(--color-electric), var(--color-violet) 30%, var(--color-pink) 60%, var(--color-orange));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Masque de révélation des lettres (overflow caché mais descendantes visibles) */
+.reveal-mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
+  vertical-align: bottom;
+}
+
+/* Titre géant fluide */
+.display {
+  font-size: clamp(3.6rem, 15.5vw, 17rem);
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+}
+
+/* Marquee CSS (vitesse pilotée en JS via --marquee-duration) */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 200;
+  transform: translateY(-200%);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  padding: 0.75rem 1rem;
+  border-radius: 999px;
+  transition: transform 0.3s var(--ease-expo);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Réduction des animations : on coupe tout ce qui bouge seul
+   ───────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
